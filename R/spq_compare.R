@@ -1,8 +1,8 @@
-#' Search for areas with similar values
+#' Compares values between two rasters
 #'
-#' Searches for areas with similar values to a query.
+#' Compares values between two rasters based on a given distance measure.
 #'
-#' @param x A numeric vector
+#' @param x An object of class SpatRaster (terra)
 #' @param y An object of class SpatRaster (terra)
 #' @param dist_fun Distance measure used. This function uses the `philentropy::distance` function in the background. Run `philentropy::getDistMethods()` to find possible distance measures.
 #' @param ... Additional arguments for the `philentropy::dist_one_one` function
@@ -15,16 +15,14 @@
 #' library(sf)
 #' ta = rast(system.file("raster/ta_scaled.tif", package = "spquery"))
 #' pr = rast(system.file("raster/pr_scaled.tif", package = "spquery"))
-#' twor = c(ta, pr)
-#' london = st_sf(geom = st_sfc(st_point(c(-0.1, 51.5))), crs = "EPSG:4326")
-#' london_rast = crop(twor, vect(london))
-#' london_vector = as.numeric(values(london_rast))
 #'
-#' re = spq_search(london_vector, twor, dist_fun = "euclidean")
+#' re = spq_compare(ta, pr, dist_fun = "jensen-shannon")
 #' plot(re)
 #'
-spq_search = function(x, y, dist_fun, ...){
-  result = terra::app(y, fun = single_dist_fun, y = x, dist_fun = dist_fun, ...)
+spq_compare = function(x, y, dist_fun, ...){
+  xy = c(x, y)
+  result = terra::app(xy, compare_dist_fun, dist_fun = dist_fun, ...)
   return(result)
 }
+
 
