@@ -1,5 +1,7 @@
 ---
 output: github_document
+editor_options: 
+  chunk_output_type: console
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -31,3 +33,27 @@ devtools::install_github("Nowosad/spquery")
 ```
 
 ## Example
+
+```{r}
+library(terra)
+library(sf)
+library(spquery)
+```
+
+```{r}
+ta = rast(system.file("raster/ta_scaled.tif", package = "spquery"))
+plot(ta)
+```
+
+```{r}
+pr = rast(system.file("raster/pr_scaled.tif", package = "spquery"))
+plot(pr)
+```
+
+### Comparison
+
+```{r}
+re = spq_compare(ta, pr, dist_fun = "jensen-shannon")
+plot(re)
+```
+

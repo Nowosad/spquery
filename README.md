@@ -22,3 +22,34 @@ devtools::install_github("Nowosad/spquery")
 ```
 
 ## Example
+
+``` r
+library(terra)
+#> terra 1.5.40
+library(sf)
+#> Linking to GEOS 3.10.2, GDAL 3.4.3, PROJ 8.2.1; sf_use_s2() is TRUE
+library(spquery)
+```
+
+``` r
+ta = rast(system.file("raster/ta_scaled.tif", package = "spquery"))
+plot(ta)
+```
+
+<img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
+
+``` r
+pr = rast(system.file("raster/pr_scaled.tif", package = "spquery"))
+plot(pr)
+```
+
+<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
+
+### Comparison
+
+``` r
+re = spq_compare(ta, pr, dist_fun = "jensen-shannon")
+plot(re)
+```
+
+<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
