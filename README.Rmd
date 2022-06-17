@@ -10,6 +10,7 @@ editor_options:
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
+  fig.height = 3,
   fig.path = "man/figures/README-",
   out.width = "100%"
 )
@@ -41,18 +42,18 @@ library(spquery)
 ```
 
 ```{r}
-ta = rast(system.file("raster/ta_scaled.tif", package = "spquery"))
-plot(ta)
+ta = rast(system.file("raster/ta_scaled.tif", package = "spquery"))[[1:4]]
+plot(ta, nr = 1)
 ```
 
 ```{r}
-pr = rast(system.file("raster/pr_scaled.tif", package = "spquery"))
-plot(pr)
+pr = rast(system.file("raster/pr_scaled.tif", package = "spquery"))[[1:4]]
+plot(pr, nr = 1)
 ```
 
 ### Comparison
 
-```{r}
+```{r, fig.height=5}
 re = spq_compare(ta, pr, dist_fun = "jensen-shannon")
 plot(re)
 ```
