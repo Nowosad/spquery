@@ -9,7 +9,8 @@
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
-The goal of spquery is to …
+The **spquery** package allows to perform serveral queries based on
+spatial raster data.
 
 ## Installation
 
@@ -53,3 +54,11 @@ plot(re)
 ```
 
 <img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
+
+## Contribution
+
+Contributions to this package are welcome - let us know if you need
+other distance measures or transformations, have any suggestions, or
+spotted a bug. The preferred method of contribution is through a GitHub
+pull request. Feel also free to contact us by creating [an
+issue](https://github.com/nowosad/supercells/issues).
