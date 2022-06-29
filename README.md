@@ -10,8 +10,8 @@
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
-The **spquery** package allows to perform several queries based on
-spatial raster data.
+The **spquery** package performs several queries based on spatial raster
+data.
 
 ## Installation
 
