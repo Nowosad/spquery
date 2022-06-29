@@ -5,11 +5,12 @@
 
 <!-- badges: start -->
 
+[![R-CMD-check](https://github.com/Nowosad/spquery/workflows/pkgdown/badge.svg)](https://github.com/Nowosad/spquery/actions)
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
-The **spquery** package allows to perform serveral queries based on
+The **spquery** package allows to perform several queries based on
 spatial raster data.
 
 ## Installation
@@ -61,4 +62,4 @@ Contributions to this package are welcome - let us know if you need
 other distance measures or transformations, have any suggestions, or
 spotted a bug. The preferred method of contribution is through a GitHub
 pull request. Feel also free to contact us by creating [an
-issue](https://github.com/nowosad/supercells/issues).
+issue](https://github.com/nowosad/spquery/issues).
