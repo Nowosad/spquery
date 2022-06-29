@@ -1,5 +1,5 @@
 Package: spquery
-Title: What the Package Does (One Line, Title Case)
+Title: Queries on Spatial Raster Data
 Version: 0.0.2
 Authors@R: c(
     person(given = "Jakub", family = "Nowosad", 
@@ -17,3 +17,5 @@ Imports:
     terra
 Suggests:
     proxy
+URL: https://jakubnowosad.com/spquery/
+BugReports: https://github.com/Nowosad/spquery/issues
