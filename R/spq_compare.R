@@ -4,8 +4,10 @@
 #'
 #' @param x An object of class SpatRaster (terra)
 #' @param y An object of class SpatRaster (terra)
-#' @param dist_fun Distance measure used. This function uses the `philentropy::distance` function in the background. Run `philentropy::getDistMethods()` to find possible distance measures.
-#' @param ... Additional arguments for the `philentropy::dist_one_one` function
+#' @param dist_fun Distance measure used. This function uses the `philentropy::distance` function (run `philentropy::getDistMethods()` to find possible distance measures), `proxy::dist`  in the background.
+#' It is also possible to use `"dtw"` (dynamic time warping)
+#' @param ... Additional arguments for `philentropy::dist_one_one`, `proxy::dist`, or `dtwclust::dtw_basic`.
+#' When `dist_fun = "dtw"` is used, `ndim` should be set to specify how many dimension the input raster time-series has.
 #'
 #' @return An object of class SpatRaster (terra)
 #' @export

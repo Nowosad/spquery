@@ -11,9 +11,11 @@ spq_compare(x, y, dist_fun, ...)
 
 \item{y}{An object of class SpatRaster (terra)}
 
-\item{dist_fun}{Distance measure used. This function uses the \code{philentropy::distance} function in the background. Run \code{philentropy::getDistMethods()} to find possible distance measures.}
+\item{dist_fun}{Distance measure used. This function uses the \code{philentropy::distance} function (run \code{philentropy::getDistMethods()} to find possible distance measures), \code{proxy::dist}  in the background.
+It is also possible to use \code{"dtw"} (dynamic time warping)}
 
-\item{...}{Additional arguments for the \code{philentropy::dist_one_one} function}
+\item{...}{Additional arguments for \code{philentropy::dist_one_one}, \code{proxy::dist}, or \code{dtwclust::dtw_basic}.
+When \code{dist_fun = "dtw"} is used, \code{ndim} should be set to specify how many dimension the input raster time-series has.}
 }
 \value{
 An object of class SpatRaster (terra)

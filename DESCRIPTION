@@ -1,6 +1,6 @@
 Package: spquery
 Title: Queries on Spatial Raster Data
-Version: 0.0.2
+Version: 0.0.3
 Authors@R: c(
     person(given = "Jakub", family = "Nowosad", 
     role = c("aut", "cre"),
@@ -16,6 +16,7 @@ Imports:
     sf,
     terra
 Suggests:
-    proxy
+    proxy,
+    dtwclust
 URL: https://jakubnowosad.com/spquery/
 BugReports: https://github.com/Nowosad/spquery/issues

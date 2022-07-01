@@ -4,9 +4,17 @@
 \name{spquery-package}
 \alias{spquery}
 \alias{spquery-package}
-\title{spquery: What the Package Does (One Line, Title Case)}
+\title{spquery: Queries on Spatial Raster Data}
 \description{
 What the package does (one paragraph).
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://jakubnowosad.com/spquery/}
+  \item Report bugs at \url{https://github.com/Nowosad/spquery/issues}
+}
+
 }
 \author{
 \strong{Maintainer}: Jakub Nowosad \email{nowosad.jakub@gmail.com} (\href{https://orcid.org/0000-0002-1057-3721}{ORCID})
