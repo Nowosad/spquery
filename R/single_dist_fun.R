@@ -3,7 +3,7 @@ single_dist_fun = function(x, y, dist_fun, ndim, ...){
     calc_fun = philentropy::dist_one_one(x, y, method = dist_fun, testNA = FALSE, ...)
   } else if (requireNamespace("proxy", quietly = TRUE) && dist_fun %in% names(summary(proxy::pr_DB)$names)) {
     calc_fun = proxy_dist_one_one(x, y, method = dist_fun, ...)
-  } else if (dist_fun == "dtw"){
+  } else if (requireNamespace("dtwclust", quietly = TRUE) && dist_fun == "dtw"){
     calc_fun = dtw_multidim(x, y, ndim = ndim, ...)
   }
   return(calc_fun)
