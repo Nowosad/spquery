@@ -22,11 +22,7 @@ proxy_dist_one_one = function(x, y, method, ...){
 }
 # norm = "L2", step.pattern = dtw::symmetric2
 dtw_multidim = function(x, y, ndim, ...){
-  if (any(is.na(c(x, y)))){
-    return(NA)
-  } else {
     mat1 = matrix(unlist(x), ncol = ndim)
     mat2 = matrix(unlist(y), ncol = ndim)
-    dtwclust::dtw_basic(mat1, mat2, ...)
-  }
+    dtwclust::dtw_basic(mat1, mat2, error.check = FALSE, ...)
 }
