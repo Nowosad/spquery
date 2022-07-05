@@ -6,7 +6,7 @@
 \alias{spquery-package}
 \title{spquery: Queries on Spatial Raster Data}
 \description{
-What the package does (one paragraph).
+Performs several queries based on spatial raster data. It allows searching for areas with similar values to a query and comparing values between two rasters based on a given distance measure.
 }
 \seealso{
 Useful links:

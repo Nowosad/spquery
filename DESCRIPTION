@@ -6,7 +6,9 @@ Authors@R: c(
     role = c("aut", "cre"),
     email = "nowosad.jakub@gmail.com", 
     comment = c(ORCID = "0000-0002-1057-3721")))
-Description: What the package does (one paragraph).
+Description: Performs several queries based on spatial raster data.
+    It allows searching for areas with similar values to a query and 
+    comparing values between two rasters based on a given distance measure.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
