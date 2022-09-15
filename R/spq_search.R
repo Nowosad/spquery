@@ -19,7 +19,7 @@
 #' pr = rast(system.file("raster/pr_scaled.tif", package = "spquery"))
 #' twor = c(ta, pr)
 #' london = st_sf(geom = st_sfc(st_point(c(-0.1, 51.5))), crs = "EPSG:4326")
-#' london_vector = as.numeric(extract(twor, london))
+#' london_vector = as.numeric(extract(twor, london, ID = FALSE))
 #'
 #' re = spq_search(london_vector, twor, dist_fun = "euclidean")
 #' plot(re)
