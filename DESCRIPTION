@@ -1,6 +1,6 @@
 Package: spquery
 Title: Queries on Spatial Raster Data
-Version: 0.0.3
+Version: 0.0.4
 Authors@R: c(
     person(given = "Jakub", family = "Nowosad", 
     role = c("aut", "cre"),
@@ -12,7 +12,7 @@ Description: Performs several queries based on spatial raster data.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.3
 Imports:
     philentropy,
     terra
