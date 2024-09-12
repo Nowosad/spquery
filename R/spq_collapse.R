@@ -1,6 +1,6 @@
 #' Title (TBD)
 #'
-#' @param x  An object of class SpatRaster (terra)
+#' @param x An object of class SpatRaster (terra)
 #' @param window 	A length of the side of a square-shaped block of cells.
 #'   Expressed in the numbers of cells, it defines the extent of a local pattern.
 #' @param fun Function to summarize the values in a given `window`.
@@ -24,6 +24,10 @@ spq_collapse = function(x, window, fun = c, ...){
   z = terra::extract(x, zonep, fun = fun, ID = FALSE, ...)
   result = terra::rast(zone, nlyrs = terra::ncol(z))
   terra::values(result) = z
-  names(result) = rep(names(x), each = window^2)
+  if (terra::nlyr(result) > terra::nlyr(x)) {
+    names(result) = rep(names(x), each = window^2)
+  } else {
+    names(result) = names(x)
+  }
   return(result)
 }
