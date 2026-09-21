@@ -2,4 +2,5 @@
 
 export(spq_collapse)
 export(spq_compare)
+export(spq_proximity)
 export(spq_search)
