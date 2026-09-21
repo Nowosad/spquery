@@ -31,3 +31,4 @@ spq_search = function(x, y, dist_fun, ...){
   return(result)
 }
 
+
