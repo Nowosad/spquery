@@ -24,8 +24,7 @@ reference feature vectors.}
 
 \item{dist_fun}{Distance measure used. This function uses the same distance
 measures as \code{\link[=spq_search]{spq_search()}}, including measures from \code{philentropy},
-\code{proxy}, and dynamic time warping through \code{dtwclust}. The specialized
-\code{"euclidean1"} method uses a vectorized Euclidean calculation. Set
+\code{proxy}, and dynamic time warping through \code{dtwclust}. Set
 \code{dist_approx = TRUE} with \code{dist_fun = "euclidean"} to use an approximate
 Euclidean nearest-neighbour search.}
 

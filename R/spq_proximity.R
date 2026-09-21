@@ -10,8 +10,7 @@
 #'   reference feature vectors.
 #' @param dist_fun Distance measure used. This function uses the same distance
 #'   measures as [spq_search()], including measures from `philentropy`,
-#'   `proxy`, and dynamic time warping through `dtwclust`. The specialized
-#'   `"euclidean1"` method uses a vectorized Euclidean calculation. Set
+#'   `proxy`, and dynamic time warping through `dtwclust`. Set
 #'   `dist_approx = TRUE` with `dist_fun = "euclidean"` to use an approximate
 #'   Euclidean nearest-neighbour search.
 #' @param dist_approx Logical; use an approximate nearest-neighbour method?
