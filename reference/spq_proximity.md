@@ -11,6 +11,7 @@ spq_proximity(
   x,
   y,
   dist_fun,
+  output = c("distance", "id", "all"),
   block_size = 100,
   progress = TRUE,
   dist_approx = FALSE,
@@ -38,6 +39,13 @@ spq_proximity(
   `philentropy`, `proxy`, and dynamic time warping through `dtwclust`.
   Set `dist_approx = TRUE` with `dist_fun = "euclidean"` to use an
   approximate Euclidean nearest-neighbour search.
+
+- output:
+
+  Character string specifying the output: `"distance"` returns the
+  distance to the closest feature vector, `"id"` returns the 1-based
+  cell ID of the closest cell in `y`, and `"all"` returns both as
+  layers.
 
 - block_size:
 
@@ -68,8 +76,9 @@ spq_proximity(
 
 ## Value
 
-An object of class SpatRaster (terra) with one layer and the same
-geometry as `x`.
+An object of class SpatRaster (terra) with the same geometry as `x`. It
+has one layer for `output = "distance"` or `output = "id"`, and two
+layers, named `distance` and `id`, for `output = "all"`.
 
 ## Examples
 
