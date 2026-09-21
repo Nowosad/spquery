@@ -36,9 +36,8 @@ spq_proximity(
   Distance measure used. This function uses the same distance measures
   as [`spq_search()`](spq_search.md), including measures from
   `philentropy`, `proxy`, and dynamic time warping through `dtwclust`.
-  The specialized `"euclidean1"` method uses a vectorized Euclidean
-  calculation. Set `dist_approx = TRUE` with `dist_fun = "euclidean"` to
-  use an approximate Euclidean nearest-neighbour search.
+  Set `dist_approx = TRUE` with `dist_fun = "euclidean"` to use an
+  approximate Euclidean nearest-neighbour search.
 
 - block_size:
 
