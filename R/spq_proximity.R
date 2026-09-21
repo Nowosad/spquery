@@ -20,13 +20,17 @@
 #'   approximately up to 10 percent farther than the exact nearest distance.
 #'   Larger values can be faster but less accurate. The default, zero, requests
 #'   an exact nearest-neighbour search. It has no raster or feature-value units.
+#' @param output Character string specifying the output: `"distance"` returns
+#'   the distance to the closest feature vector, `"id"` returns the 1-based
+#'   cell ID of the closest cell in `y`, and `"all"` returns both as layers.
 #' @param block_size Number of rows from `x` to process at once.
 #' @param progress Logical; show a progress bar while processing `x`?
 #' @param ... Additional arguments for the selected distance backend. When
 #'   `dist_fun = "dtw"`, `ndim` must be supplied.
 #'
-#' @return An object of class SpatRaster (terra) with one layer and the same
-#'   geometry as `x`.
+#' @return An object of class SpatRaster (terra) with the same geometry as
+#'   `x`. It has one layer for `output = "distance"` or `output = "id"`, and
+#'   two layers, named `distance` and `id`, for `output = "all"`.
 #' @export
 #'
 #' @examples
@@ -42,12 +46,14 @@ spq_proximity <- function(
   x,
   y,
   dist_fun,
+  output = c("distance", "id", "all"),
   block_size = 100,
   progress = TRUE,
   dist_approx = FALSE,
   eps = 0,
   ...
 ) {
+  output <- match.arg(output)
   if (!inherits(x, "SpatRaster") || !inherits(y, "SpatRaster")) {
     stop("x and y must be SpatRaster objects")
   }
@@ -90,12 +96,16 @@ spq_proximity <- function(
   }
 
   reference <- terra::values(y, mat = TRUE)
-  reference <- reference[stats::complete.cases(reference), , drop = FALSE]
+  reference_id <- seq_len(nrow(reference))
+  complete_reference <- stats::complete.cases(reference)
+  reference_id <- reference_id[complete_reference]
+  reference <- reference[complete_reference, , drop = FALSE]
   if (nrow(reference) == 0) {
     stop("y has no complete feature vectors")
   }
 
-  result <- rep(NA_real_, terra::ncell(x))
+  distances_result <- rep(NA_real_, terra::ncell(x))
+  ids_result <- rep(NA_real_, terra::ncell(x))
   nrows <- terra::nrow(x)
   block_size <- as.integer(block_size)
   first_rows <- seq.int(1, nrows, by = block_size)
@@ -125,20 +135,23 @@ spq_proximity <- function(
     query <- terra::readValues(x, row = first_row, nrows = rows, mat = TRUE)
     complete <- stats::complete.cases(query)
     distances <- rep(NA_real_, nrow(query))
+    ids <- rep(NA_real_, nrow(query))
 
     if (any(complete)) {
       query_complete <- query[complete, , drop = FALSE]
       if (use_approx) {
-        distances[complete] <- euclidean_approx_proximity(
+        nearest <- euclidean_approx_proximity(
           query_complete,
           reference,
           eps = eps
         )
+        distances[complete] <- nearest$distance
+        ids[complete] <- reference_id[nearest$id]
       } else {
-        distances[complete] <- vapply(
+        nearest <- lapply(
           which(complete),
           function(i) {
-            min(vapply(
+            distances <- vapply(
               seq_len(nrow(reference)),
               function(j) {
                 as.numeric(single_dist_fun(
@@ -149,22 +162,38 @@ spq_proximity <- function(
                 ))
               },
               numeric(1)
-            ))
-          },
-          numeric(1)
+            )
+            id <- which.min(distances)
+            c(distance = distances[id], id = reference_id[id])
+          }
         )
+        nearest <- do.call(rbind, nearest)
+        distances[complete] <- nearest[, "distance"]
+        ids[complete] <- nearest[, "id"]
       }
     }
 
     first_cell <- (first_row - 1) * terra::ncol(x) + 1
     last_cell <- first_cell + nrow(query) - 1
-    result[first_cell:last_cell] <- distances
+    distances_result[first_cell:last_cell] <- distances
+    ids_result[first_cell:last_cell] <- ids
     if (!is.null(progress_bar)) {
       utils::setTxtProgressBar(progress_bar, block)
     }
   }
 
-  terra::setValues(terra::rast(x, nlyrs = 1), result)
+  result <- terra::rast(x, nlyrs = if (output == "all") 2 else 1)
+  if (output == "id") {
+    result <- terra::setValues(result, ids_result)
+    names(result) <- "id"
+  } else if (output == "all") {
+    result <- terra::setValues(result, cbind(distances_result, ids_result))
+    names(result) <- c("distance", "id")
+  } else {
+    result <- terra::setValues(result, distances_result)
+    names(result) <- "distance"
+  }
+  result
 }
 
 euclidean_approx_proximity <- function(query, reference, eps) {
@@ -175,5 +204,8 @@ euclidean_approx_proximity <- function(query, reference, eps) {
     eps = eps,
     searchtype = "standard"
   )
-  nearest$nn.dists[, 1]
+  list(
+    distance = nearest$nn.dists[, 1],
+    id = nearest$nn.idx[, 1]
+  )
 }
