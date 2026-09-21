@@ -8,6 +8,7 @@ spq_proximity(
   x,
   y,
   dist_fun,
+  output = c("distance", "id", "all"),
   block_size = 100,
   progress = TRUE,
   dist_approx = FALSE,
@@ -28,6 +29,10 @@ measures as \code{\link[=spq_search]{spq_search()}}, including measures from \co
 \code{dist_approx = TRUE} with \code{dist_fun = "euclidean"} to use an approximate
 Euclidean nearest-neighbour search.}
 
+\item{output}{Character string specifying the output: \code{"distance"} returns
+the distance to the closest feature vector, \code{"id"} returns the 1-based
+cell ID of the closest cell in \code{y}, and \code{"all"} returns both as layers.}
+
 \item{block_size}{Number of rows from \code{x} to process at once.}
 
 \item{progress}{Logical; show a progress bar while processing \code{x}?}
@@ -45,8 +50,9 @@ an exact nearest-neighbour search. It has no raster or feature-value units.}
 \code{dist_fun = "dtw"}, \code{ndim} must be supplied.}
 }
 \value{
-An object of class SpatRaster (terra) with one layer and the same
-geometry as \code{x}.
+An object of class SpatRaster (terra) with the same geometry as
+\code{x}. It has one layer for \code{output = "distance"} or \code{output = "id"}, and
+two layers, named \code{distance} and \code{id}, for \code{output = "all"}.
 }
 \description{
 For each cell in \code{x}, finds the minimum distance to any complete feature
