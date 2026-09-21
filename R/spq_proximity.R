@@ -96,13 +96,12 @@ spq_proximity <- function(
   }
 
   reference <- terra::values(y, mat = TRUE)
-  reference_id <- seq_len(nrow(reference))
   complete_reference <- stats::complete.cases(reference)
-  reference_id <- reference_id[complete_reference]
-  reference <- reference[complete_reference, , drop = FALSE]
-  if (nrow(reference) == 0) {
+  if (!any(complete_reference)) {
     stop("y has no complete feature vectors")
   }
+  reference <- reference[complete_reference, , drop = FALSE]
+
 
   distances_result <- rep(NA_real_, terra::ncell(x))
   ids_result <- rep(NA_real_, terra::ncell(x))
@@ -146,7 +145,10 @@ spq_proximity <- function(
           eps = eps
         )
         distances[complete] <- nearest$distance
-        ids[complete] <- reference_id[nearest$id]
+        ids[complete] <- reference_cell_ids(
+          nearest$id,
+          complete_reference
+        )
       } else {
         nearest <- lapply(
           which(complete),
@@ -164,12 +166,15 @@ spq_proximity <- function(
               numeric(1)
             )
             id <- which.min(distances)
-            c(distance = distances[id], id = reference_id[id])
+            c(distance = distances[id], id = id)
           }
         )
         nearest <- do.call(rbind, nearest)
         distances[complete] <- nearest[, "distance"]
-        ids[complete] <- nearest[, "id"]
+        ids[complete] <- reference_cell_ids(
+          nearest[, "id"],
+          complete_reference
+        )
       }
     }
 
@@ -194,6 +199,12 @@ spq_proximity <- function(
     names(result) <- "distance"
   }
   result
+}
+
+reference_cell_ids <- function(index, complete_reference) {
+  # Reconstruct only the selected original cell IDs; no full numeric ID
+  # vector is retained between blocks.
+  as.double(which(complete_reference)[index])
 }
 
 euclidean_approx_proximity <- function(query, reference, eps) {
